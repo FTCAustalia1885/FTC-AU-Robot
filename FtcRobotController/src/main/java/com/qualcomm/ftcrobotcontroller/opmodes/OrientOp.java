@@ -27,8 +27,12 @@ public class OrientOp extends OpMode implements SensorEventListener {
     private SensorManager mSensorManager;
     Sensor accelerometer;
     Sensor magnetometer;
+
+    private boolean azimuthInitialized;
+    private float initAzimuth;
+
     // orientation values
-    private float azimut = 0.0f;       // value in radians
+    private float azimuth = 0.0f;       // value in radians
     private float pitch = 0.0f;        // value in radians
     private float roll = 0.0f;         // value in radians
 
@@ -63,11 +67,12 @@ public class OrientOp extends OpMode implements SensorEventListener {
             // delay value is SENSOR_DELAY_UI which is ok for telemetry, maybe not for actual robot use
             mSensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_UI);
             mSensorManager.registerListener(this, magnetometer, SensorManager.SENSOR_DELAY_UI);
+
+            azimuthInitialized = false;
         } catch (Exception e) {
             telemetry.addData("Error", e.getStackTrace());
             DbgLog.msg(e.getStackTrace().toString());
         }
-
     }
 
     /*
@@ -84,9 +89,9 @@ public class OrientOp extends OpMode implements SensorEventListener {
             telemetry.addData("2 Gravity", "Gravity sensor returning values ");
             telemetry.addData("3 Geomagnetic", "Geomagnetic sensor returning values ");
         }
-        telemetry.addData("4 yaw", "yaw= " + Math.round(Math.toDegrees(azimut)));
-        telemetry.addData("5 pitch", "pitch = " + Math.round(Math.toDegrees(pitch)));
-        telemetry.addData("6 roll", "roll = " + Math.round(Math.toDegrees(roll)));
+        telemetry.addData("4 yaw", "yaw= " + String.format("%0 6.3f",Math.toDegrees(azimuth)));
+        telemetry.addData("5 pitch", "pitch = " + String.format("%0 6.3f",Math.toDegrees(pitch)));
+        telemetry.addData("6 roll", "roll = " + String.format("%0 6.3f",Math.toDegrees(roll)));
     }
 
     /*
@@ -119,7 +124,19 @@ public class OrientOp extends OpMode implements SensorEventListener {
             if (success) {
                 float orientation[] = new float[3];
                 SensorManager.getOrientation(R, orientation);
-                azimut = orientation[0]; // orientation contains: azimut, pitch and roll
+                // orientation contains: azimuth, pitch and roll
+                // raw values ranges from -pi to pi
+                if(!azimuthInitialized){
+                    initAzimuth = (float)(orientation[0] + Math.PI);
+                    azimuthInitialized = true;
+                }
+                azimuth = (float)(orientation[0] + Math.PI) - initAzimuth;
+                if(azimuth > Math.PI){
+                    azimuth -= 2 * Math.PI;
+                }
+                else if(azimuth < -Math.PI){
+                    azimuth += 2 * Math.PI;
+                }
                 pitch = orientation[1];
                 roll = orientation[2];
             }
