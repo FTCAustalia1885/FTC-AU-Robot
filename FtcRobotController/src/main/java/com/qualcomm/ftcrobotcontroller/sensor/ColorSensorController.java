@@ -44,7 +44,8 @@ public class ColorSensorController {
             Color.RGBToHSV(sensor.red(), sensor.green(), sensor.blue(), hsvvalues);
             return hsvvalues;
         }else{
-            throw new IllegalStateException("Color sensor is not activated!");
+            setActive(true);
+            return getHSVArray();
         }
     }
 
@@ -55,7 +56,8 @@ public class ColorSensorController {
         if (active){
             return Color.argb(sensor.alpha(), sensor.red(), sensor.green(), sensor.blue());
         }else {
-            throw new IllegalStateException("Color sensor is not activated!");
+            setActive(true);
+            return getARGB();
         }
     }
 }
