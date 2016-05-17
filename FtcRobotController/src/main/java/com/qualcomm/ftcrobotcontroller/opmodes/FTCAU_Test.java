@@ -12,18 +12,21 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class FTCAU_Test extends OpMode
 {
     private DriveTrainController driveTrainController;
+    private boolean first;
+
     @Override
     public void init()
     {
         driveTrainController = new DriveTrainController(hardwareMap);
+        first = true;
     }
 
     @Override
     public void loop()
     {
-        telemetry.addData("FL", driveTrainController.getFrontLeftPosition());
-        telemetry.addData("FR", driveTrainController.getFrontRightPosition());
-        telemetry.addData("BL", driveTrainController.getBackLeftPosition());
-        telemetry.addData("BR", driveTrainController.getBackRightPosition());
+    }
+
+    @Override
+    public void stop(){
     }
 }

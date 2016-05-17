@@ -59,5 +59,6 @@ public class FtcOpModeRegister implements OpModeRegister {
      */
       manager.register("FTCAU_Test", FTCAU_Test.class);
       manager.register("Tilt", OrientOp.class);
+      manager.register("intake test", IntakeTest.class);
   }
 }
