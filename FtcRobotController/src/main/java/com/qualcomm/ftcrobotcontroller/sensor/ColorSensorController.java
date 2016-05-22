@@ -32,7 +32,11 @@ public class ColorSensorController {
      */
     public void setActive(boolean on) {
         this.active = on;
-        cdim.setDigitalChannelState(LED_CHANNEL, active);
+        setLED(true);
+    }
+
+    public void setLED(boolean on) {
+        cdim.setDigitalChannelState(LED_CHANNEL, on);
     }
 
     /**
@@ -41,7 +45,7 @@ public class ColorSensorController {
     public float[] getHSVArray() {
         if (active){
             float[] hsvvalues = new float[3];
-            Color.RGBToHSV(sensor.red(), sensor.green(), sensor.blue(), hsvvalues);
+            Color.RGBToHSV((sensor.red() * 255) / 800, (sensor.green() * 255) / 800, (sensor.blue() * 255) / 800, hsvvalues);
             return hsvvalues;
         }else{
             setActive(true);
@@ -60,4 +64,19 @@ public class ColorSensorController {
             return getARGB();
         }
     }
+
+    public float getHue(){
+        return getHSVArray()[0];
+    }
+
+    public int getRed(){
+        return sensor.red();
+    }
+    public int getGreen(){
+        return sensor.red();
+    }
+    public int getBlue(){
+        return sensor.blue();
+    }
+
 }

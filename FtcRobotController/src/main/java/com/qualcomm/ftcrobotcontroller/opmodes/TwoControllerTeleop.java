@@ -1,5 +1,6 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
+import com.qualcomm.ftcrobotcontroller.module.DriveTrainController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -13,7 +14,7 @@ import java.util.*;
 /**
  * Created by kristengiesler on 4/12/16.
  */
-public class MyTeleOp  extends OpMode {
+public class TwoControllerTeleop extends OpMode {
 
 
     //declares variables
@@ -33,10 +34,7 @@ public class MyTeleOp  extends OpMode {
 
 
     //declares motors and servos
-    DcMotor leftFront;
-    DcMotor leftBack;
-    DcMotor rightFront;
-    DcMotor rightBack;
+    DriveTrainController driveTrain;
     DcMotor intake;
     /*
     DcMotor winch1, winch2;
@@ -47,10 +45,6 @@ public class MyTeleOp  extends OpMode {
     */
     Servo churroClamp;
 
-    public MyTeleOp() {
-
-    }
-
     @Override
     public void init() {
         /* Use the hardwareMap to get the dc motors and servos by name.
@@ -58,14 +52,9 @@ public class MyTeleOp  extends OpMode {
 		 * creating robot config file
 		 */
 
-        leftBack = hardwareMap.dcMotor.get("backleft");
-        leftFront = hardwareMap.dcMotor.get("frontleft");
-        rightBack = hardwareMap.dcMotor.get("backright");
-        rightFront = hardwareMap.dcMotor.get("frontright");
-        intake = hardwareMap.dcMotor.get("intake");
+        driveTrain = new DriveTrainController(hardwareMap);
 
-        rightBack.setDirection(DcMotor.Direction.REVERSE);
-        rightFront.setDirection(DcMotor.Direction.REVERSE);
+        intake = hardwareMap.dcMotor.get("intake");
 
         /*
         arm = hardwareMap.dcMotor.get("arm");
@@ -79,18 +68,12 @@ public class MyTeleOp  extends OpMode {
         churroClamp = hardwareMap.servo.get("churroClamp");
     }
 
-    /*
-     * will be called in a repeated loop until stopped
-     */
     @Override
     public void loop() {
         //decide which controls go to what (hardware mapping)
         //Note: range is 1 to -1 where full up= -1 and full down= 1
         //                             full left = -1 and full right=1
 
-        left = gamepad1.left_stick_y;
-        right = gamepad1.right_stick_y;
-        intakePower = gamepad1.right_trigger;
         /*
         armPow = gamepad2.right_stick_y;
         winchPow = gamepad2.left_stick_y;
@@ -98,29 +81,14 @@ public class MyTeleOp  extends OpMode {
         */
 
         //set the values to the motors
-        leftFront.setPower(left);
-        leftBack.setPower(left);
-        rightFront.setPower(right);
-        rightBack.setPower(right);
-        intake.setPower(intakePower);
+        driveTrain.setPower(gamepad1.left_stick_y, gamepad1.right_stick_y);
+
+        intake.setPower(gamepad1.right_trigger);
         /*
         arm.setPower(armPow);
         winch1.setPower(winchPow);
         winch2.setPower(winchPow);
          */
-
-        //if a is pressed, wheels go 75% of current speed
-        if ( gamepad1.a ) {
-            leftFront.setPower(left*.75);
-            leftBack.setPower(left*.75);
-            rightFront.setPower(right*.75);
-            rightBack.setPower(right*.75);
-        }
-
-        // if b is pressed, intake goes at 75% of current speed
-        if ( gamepad1.b ){
-            intake.setPower(intakePower*.75);
-        }
 
         //set the values to the servos
         /*
@@ -180,10 +148,7 @@ public class MyTeleOp  extends OpMode {
         //telemetry.addData("block pwr", "block pwr:" + String.format("%.2f", blockPos));
     }
 
-    /*
-     * code to run when opMode is disabled
-     */
-
+    @Override
     public void stop() {
         System.out.print("WE DID IT, ACCOMPLISHMENT");
     }
