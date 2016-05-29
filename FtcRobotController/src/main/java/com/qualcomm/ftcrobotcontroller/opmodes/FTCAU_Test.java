@@ -26,10 +26,9 @@ public class FTCAU_Test extends OpMode {
 
 	@Override
 	public void loop() {
-		telemetry.addData("red", colorSensor.getRed());
-		telemetry.addData("green", colorSensor.getGreen());
-		telemetry.addData("blue", colorSensor.getBlue());
 		telemetry.addData("hue", colorSensor.getHue());
+		telemetry.addData("isRed", colorSensor.getHue() < 20 || colorSensor.getHue() > 340 );
+		telemetry.addData("isBlue", colorSensor.getHue() < 250 && colorSensor.getHue() > 190 );
 	}
 
 	@Override

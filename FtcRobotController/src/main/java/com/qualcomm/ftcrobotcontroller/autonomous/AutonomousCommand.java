@@ -7,4 +7,5 @@ public abstract class AutonomousCommand {
     public abstract void update(float delta);
     public abstract boolean isComplete();
     public void finalize(){}
+    public void init(){}
 }

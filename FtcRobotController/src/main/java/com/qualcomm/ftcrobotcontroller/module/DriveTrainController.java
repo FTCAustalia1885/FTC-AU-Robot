@@ -16,14 +16,14 @@ public class DriveTrainController {
     private final String BLN = "motorLeftBack";
     private final String BRN = "motorRightBack";
 
+    private double leftPower, rightPower;
+
     private final DcMotor frontLeft;
     private final DcMotor frontRight;
     private final DcMotor backLeft;
     private final DcMotor backRight;
 
     private long lastTime;
-
-    private static final PID backLeftPID = new PID(0.1, 0.0, 0.0);
 
     public DriveTrainController(HardwareMap hardwareMap){
         frontLeft  = hardwareMap.dcMotor.get(FLN);
@@ -35,6 +35,10 @@ public class DriveTrainController {
         frontRight.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         backLeft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
         backRight.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+
+        backLeft.setDirection(DcMotor.Direction.REVERSE);
+	    frontRight.setDirection(DcMotor.Direction.REVERSE);
+	    frontLeft.setDirection(DcMotor.Direction.REVERSE);
     }
 
     public void driveTo(int delta) {
@@ -50,35 +54,45 @@ public class DriveTrainController {
     }
 
     public void setLeftPower(double level){
-        backLeft.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        backLeft.setPower(level);
-        frontLeft.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        frontLeft.setPower(level);
+        level = Math.max(Math.min(level, 1),-1);
+        leftPower = level;
+
+        backLeft.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        backLeft.setPower(leftPower);
+        frontLeft.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        frontLeft.setPower(leftPower);
+    }
+
+    public double getLeftPower(){
+        return leftPower;
+    }
+
+    public int getLeftPosition(){
+        return getFrontLeftPosition();
     }
 
     public void setRightPower(double level){
-        backRight.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        backRight.setPower(level);
-        frontRight.setMode(DcMotorController.RunMode.RUN_USING_ENCODERS);
-        frontRight.setPower(level);
+        level = Math.max(Math.min(level, 1),-1);
+        rightPower = level;
+
+        backRight.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        backRight.setPower(rightPower);
+        frontRight.setMode(DcMotorController.RunMode.RUN_WITHOUT_ENCODERS);
+        frontRight.setPower(rightPower);
     }
+
+    public double getRightPower(){
+        return rightPower;
+    }
+
+    public int getRightPosition(){
+        return getFrontRightPosition();
+    }
+
 
     public void setPower(double left, double right){
         setLeftPower(left);
         setRightPower(right);
-    }
-
-    public void setLeftPosition(int position){
-        backLeft.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-        backLeft.setPower(0.2);
-        backLeft.setTargetPosition(position);
-        frontLeft.setMode(DcMotorController.RunMode.RUN_TO_POSITION);
-        frontLeft.setPower(0.2);
-        frontLeft.setTargetPosition(position);
-    }
-
-    public double getBackLeftPIDOutput(){
-        return backLeftPID.getOutput();
     }
 
     public int getBackLeftPosition(){
@@ -97,19 +111,11 @@ public class DriveTrainController {
         return frontRight.getCurrentPosition();
     }
 
-    public void resetPIDs(){
-        backLeftPID.reset(backLeft.getCurrentPosition(), backLeft.getTargetPosition());
-        lastTime = System.currentTimeMillis();
-    }
-
-    public long updatePIDs(){
-        long currentTime = System.currentTimeMillis();
-        long deltaTime = currentTime - lastTime;
-
-        backLeftPID.update(backLeft.getCurrentPosition(), deltaTime);
-
-        lastTime = currentTime;
-        return deltaTime;
+    public void resetEncoders(){
+        backLeft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        backRight.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        frontLeft.setMode(DcMotorController.RunMode.RESET_ENCODERS);
+        frontRight.setMode(DcMotorController.RunMode.RESET_ENCODERS);
     }
 
 }

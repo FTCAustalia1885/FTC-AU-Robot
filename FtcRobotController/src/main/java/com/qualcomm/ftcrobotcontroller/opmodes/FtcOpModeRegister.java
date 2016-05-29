@@ -58,8 +58,7 @@ public class FtcOpModeRegister implements OpModeRegister {
      * Uncomment any of the following lines if you want to register an op mode.
      */
       manager.register("FTCAU_Test", FTCAU_Test.class);
-      manager.register("Tilt", OrientOp.class);
-      manager.register("intake test", IntakeTest.class);
-      manager.register("ColorTest", ADAFruitRGBExample.class);
+      manager.register("Tele-OP", TwoControllerTeleop.class);
+      manager.register("TestDriveAuton", TestDriveAutonomous.class);
   }
 }
