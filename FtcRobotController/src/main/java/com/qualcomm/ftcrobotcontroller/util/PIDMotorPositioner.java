@@ -1,6 +1,5 @@
 package com.qualcomm.ftcrobotcontroller.util;
 
-import com.qualcomm.ftcrobotcontroller.module.Controller;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 /**

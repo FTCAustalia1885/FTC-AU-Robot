@@ -1,12 +1,9 @@
 package com.qualcomm.ftcrobotcontroller.opmodes;
 
 import com.qualcomm.ftcrobotcontroller.autonomous.AutonomousCommand;
-import com.qualcomm.ftcrobotcontroller.autonomous.DriveyMcDriveface;
+import com.qualcomm.ftcrobotcontroller.autonomous.StraightDriveEncoder;
 import com.qualcomm.ftcrobotcontroller.module.DriveTrainController;
 
-import junit.framework.Test;
-
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -24,6 +21,6 @@ public class TestDriveAutonomous extends Autonomous{
 
 	@Override
 	public void addCommands(Collection<AutonomousCommand> c) {
-		c.add(new DriveyMcDriveface(10000,controller,telemetry));
+		c.add(new StraightDriveEncoder(10000,controller,telemetry));
 	}
 }
