@@ -1,6 +1,6 @@
-package com.qualcomm.ftcrobotcontroller.opmodes;
+package com.qualcomm.ftcrobotcontroller.opmodes.autonomous;
 
-import com.qualcomm.ftcrobotcontroller.autonomous.AutonomousCommand;
+import com.qualcomm.ftcrobotcontroller.opmodes.autonomous.AutonomousCommand;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import java.util.Collection;

@@ -1,4 +1,4 @@
-package com.qualcomm.ftcrobotcontroller.module;
+package com.qualcomm.ftcrobotcontroller.controller.sensor;
 
 import android.content.Context;
 import android.hardware.Sensor;
@@ -6,17 +6,12 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.qualcomm.ftccommon.DbgLog;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by Michael on 6/5/2016.
  */
-public class Compass implements SensorEventListener{
+public class CompassController implements SensorEventListener{
 
 	private boolean azimuthInitialized;
 	private SensorManager mSensorManager;
@@ -32,7 +27,7 @@ public class Compass implements SensorEventListener{
 	private float pitch;
 	private float roll;
 
-	public Compass(HardwareMap map){
+	public CompassController(HardwareMap map){
 		mSensorManager = (SensorManager) map.appContext.getSystemService(Context.SENSOR_SERVICE);
 		accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		magnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);

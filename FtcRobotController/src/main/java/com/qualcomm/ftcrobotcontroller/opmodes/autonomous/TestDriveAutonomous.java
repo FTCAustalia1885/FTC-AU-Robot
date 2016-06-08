@@ -1,7 +1,8 @@
-package com.qualcomm.ftcrobotcontroller.opmodes;
+package com.qualcomm.ftcrobotcontroller.opmodes.autonomous;
 
-import com.qualcomm.ftcrobotcontroller.autonomous.AutonomousCommand;
-import com.qualcomm.ftcrobotcontroller.autonomous.StraightDriveEncoder;
+import com.qualcomm.ftcrobotcontroller.opmodes.autonomous.Autonomous;
+import com.qualcomm.ftcrobotcontroller.opmodes.autonomous.AutonomousCommand;
+import com.qualcomm.ftcrobotcontroller.opmodes.autonomous.StraightDriveEncoder;
 import com.qualcomm.ftcrobotcontroller.module.DriveTrainController;
 
 import java.util.Collection;
@@ -9,7 +10,7 @@ import java.util.Collection;
 /**
  * Created by Michael on 5/29/2016.
  */
-public class TestDriveAutonomous extends Autonomous{
+public class TestDriveAutonomous extends Autonomous {
 
 	private DriveTrainController controller;
 

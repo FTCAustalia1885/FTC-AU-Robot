@@ -1,4 +1,4 @@
-package com.qualcomm.ftcrobotcontroller.autonomous;
+package com.qualcomm.ftcrobotcontroller.opmodes.autonomous;
 
 import com.qualcomm.robotcore.robocol.Telemetry;
 

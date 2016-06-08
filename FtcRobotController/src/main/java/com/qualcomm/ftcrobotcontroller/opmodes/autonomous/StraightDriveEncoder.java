@@ -1,7 +1,6 @@
-package com.qualcomm.ftcrobotcontroller.autonomous;
+package com.qualcomm.ftcrobotcontroller.opmodes.autonomous;
 
 import com.qualcomm.ftcrobotcontroller.module.DriveTrainController;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.robocol.Telemetry;
 
 /**

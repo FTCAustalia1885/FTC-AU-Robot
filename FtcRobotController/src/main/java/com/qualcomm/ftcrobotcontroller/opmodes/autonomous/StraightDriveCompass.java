@@ -1,4 +1,4 @@
-package com.qualcomm.ftcrobotcontroller.autonomous;
+package com.qualcomm.ftcrobotcontroller.opmodes.autonomous;
 
 import com.qualcomm.ftcrobotcontroller.module.Compass;
 import com.qualcomm.ftcrobotcontroller.module.DriveTrainController;

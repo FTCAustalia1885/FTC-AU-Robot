@@ -1,7 +1,5 @@
-package com.qualcomm.ftcrobotcontroller.module;
+package com.qualcomm.ftcrobotcontroller.controller.module;
 
-import com.qualcomm.ftcrobotcontroller.util.PID;
-import com.qualcomm.ftcrobotcontroller.util.PIDMotorPositioner;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.hardware.HardwareMap;
